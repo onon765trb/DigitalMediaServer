@@ -3037,7 +3037,7 @@ public abstract class DLNAResource extends HTTPResource implements Cloneable, Ru
 		}
 
 		if (low > 0 && media.getBitRate() > 0) {
-			lastStartPosition = (low * 8) / media.getBitRate();
+			lastStartPosition = (low * 8) / (double) media.getBitRate();
 			LOGGER.trace("Estimating seek position from byte range:");
 			LOGGER.trace("   media.getBitrate: " + media.getBitRate());
 			LOGGER.trace("   low: " + low);
@@ -3101,7 +3101,7 @@ public abstract class DLNAResource extends HTTPResource implements Cloneable, Ru
 				resume.update((Range.Time) range, this);
 			}
 
-			params.timeseek = resume.getTimeOffset() / 1000;
+			params.timeseek = resume.getTimeOffset() / 1000d;
 			if (player == null) {
 				player = PlayerFactory.getPlayer(this);
 			}
@@ -3276,7 +3276,7 @@ public abstract class DLNAResource extends HTTPResource implements Cloneable, Ru
 		) {
 			double seekPosition = configurationSpecificToRenderer.getThumbnailSeekPos();
 			if (isResume()) {
-				double resumePosition = ((double) resume.getTimeOffset() / 1000);
+				double resumePosition = resume.getTimeOffset() / 1000d;
 
 				if (media.getDurationInSeconds() > 0 && resumePosition < media.getDurationInSeconds()) {
 					seekPosition = resumePosition;
