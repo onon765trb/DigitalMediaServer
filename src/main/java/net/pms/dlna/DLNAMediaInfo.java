@@ -49,6 +49,7 @@ import net.pms.io.OutputParams;
 import net.pms.io.ProcessWrapperImpl;
 import net.pms.network.HTTPResource;
 import net.pms.util.FileUtil;
+import net.pms.util.ISO639;
 import net.pms.util.MpegUtil;
 import net.pms.util.ProcessUtil;
 import net.pms.util.Rational;
@@ -1175,11 +1176,11 @@ public class DLNAMediaInfo implements Cloneable {
 						int b = line.indexOf("):", a);
 						DLNAMediaAudio audio = new DLNAMediaAudio();
 						audio.setId(langId++);
+						ISO639 language = null;
 						if (a > -1 && b > a) {
-							audio.setLang(line.substring(a + 1, b));
-						} else {
-							audio.setLang(DLNAMediaLang.UND);
+							language = ISO639.get(line.substring(a + 1, b));
 						}
+						audio.setLang(language == null ? ISO639.UND : language);
 
 						// Get TS IDs
 						a = line.indexOf("[0x");
@@ -1343,11 +1344,11 @@ public class DLNAMediaInfo implements Cloneable {
 
 						int a = line.indexOf('(');
 						int b = line.indexOf("):", a);
+						ISO639 language = null;
 						if (a > -1 && b > a) {
-							lang.setLang(line.substring(a + 1, b));
-						} else {
-							lang.setLang(DLNAMediaLang.UND);
+							language = ISO639.get(line.substring(a + 1, b));
 						}
+						lang.setLang(language == null ? ISO639.UND : language);
 
 						lang.setId(subId++);
 						int FFmpegMetaDataNr = FFmpegMetaData.nextIndex();
