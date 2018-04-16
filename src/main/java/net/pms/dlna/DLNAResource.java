@@ -1691,7 +1691,7 @@ public abstract class DLNAResource extends HTTPResource implements Cloneable, Ru
 					nameSuffixBuilder.append("}");
 				}
 				return nameSuffixBuilder.toString();
-			case AUDIO:
+			case AUDIO: //TODO: (Nad) Add Something here?
 			case IMAGE:
 			case UNKNOWN:
 			default:
