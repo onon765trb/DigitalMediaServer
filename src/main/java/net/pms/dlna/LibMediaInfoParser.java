@@ -731,7 +731,7 @@ public class LibMediaInfoParser {
 			format = FormatConfiguration.AAC_LC; // v2 and v4
 		} else if (value.equals("ltp") || value.equals("aac ltp")) {
 			format = FormatConfiguration.AAC_LTP;
-		} else if (value.contains("he-aac") || value.equals("aac lc sbr") || value.equals("aac lc sbr ps")) {
+		} else if (value.contains("he-aac") || value.contains("he-aacv2") || value.equals("aac lc sbr") || value.equals("aac lc sbr ps")) {
 			format = FormatConfiguration.HE_AAC; // v1 and v2
 		} else if (
 			value.equals("er bsac") ||
