@@ -298,14 +298,14 @@ Section /o $(SectionDownloadJava) sec3 ; http://www.oracle.com/technetwork/java/
 	${WordReplaceS} $(Downloading) "%s" "Oracle Java 8" "+1" $2
 	${If} ${IsWinXP}
 	${AndIfNot} ${RunningX64}
-		inetc::get /NOSSL /WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
+		inetc::get /NOSSL /WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /RECEIVETIMEOUT  30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
 		Pop $0
 		StrCmpS $0 "OK" JavaDownloadOK
 		${WordReplaceS} $(DownloadError) "%s" $0 "+1" $0
 		MessageBox MB_ICONEXCLAMATION $0
 		Goto End
 	${EndIf}
-	inetc::get /WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
+	inetc::get /WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /RECEIVETIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
 	Pop $0
 	StrCmpS $0 "OK" JavaDownloadOK
 	${WordReplaceS} $(DownloadError) "%s" $0 "+1" $0
