@@ -299,7 +299,7 @@ Section /o $(SectionDownloadJava) sec3 ; http://www.oracle.com/technetwork/java/
 		StrCpy $1 "jre-8u151-windows-x64.exe"
 	${EndIf}
 	${WordReplaceS} $(Downloading) "%s" "Oracle Java 8" "+1" $2
-	inetc::get "$NoSSL"/WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
+	inetc::get $NoSSL/WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
 	Pop $0
 	StrCmpS $0 "OK" JavaDownloadOK
 	${WordReplaceS} $(DownloadError) "%s" $0 "+1" $0
@@ -512,6 +512,7 @@ Function .onInit
 		Quit
 	${EndIf}
 
+	StrCpy $NoSSL " "
 	${If} ${IsWinXP}
 		SectionSetFlags ${sec13} ${SF_SELECTED}
 		StrCpy $NoSSL "/NOSSL "
