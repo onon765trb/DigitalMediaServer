@@ -227,8 +227,6 @@ Section "-32-bit" sec11
 	SetOutPath "$INSTDIR\win32"
 	Nsis7z::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
 	Pop $0
-	StrCmp $0 "ok" +2
-	MessageBox MB_ICONEXCLAMATION $0
 	Delete "$INSTDIR\win32\ffmpeg.7z"
 	LockedList::AddModule "$INSTDIR\win32\MediaInfo.dll"
 SectionEnd
