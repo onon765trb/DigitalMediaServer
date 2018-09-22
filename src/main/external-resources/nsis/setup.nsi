@@ -195,8 +195,8 @@ Section "!$(SectionServer)" sec1
 	WriteRegStr HKLM "${REG_KEY_UNINSTALL}" "FirewallSettings" "$FirewallStatus"
 
 	ReadEnvStr $R0 "ALLUSERSPROFILE"
-	CreateDirectory "$R0\renderers"
-	CreateDirectory "$R0\saved-configuration"
+	CreateDirectory "$R0\${PROJECT_NAME_CAMEL}\renderers"
+	CreateDirectory "$R0\${PROJECT_NAME_CAMEL}\saved-configuration"
 	
 	SetOutPath "$INSTDIR"
 	SetOverwrite on
