@@ -290,7 +290,6 @@ Section /o $(SectionDownloadJava) sec3 ; http://www.oracle.com/technetwork/java/
 		; http://javadl.sun.com/webapps/download/AutoDL?BundleId=106307
 		StrCpy $0 "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf"
 		StrCpy $1 "jre-8u151-windows-i586.exe"
-		StrCpy $NoSSL "/NOSSL"
 	${EndIf}
 	${If} ${IsWinXP}
 	${AndIf} ${RunningX64}
@@ -298,10 +297,9 @@ Section /o $(SectionDownloadJava) sec3 ; http://www.oracle.com/technetwork/java/
 		; http://javadl.sun.com/webapps/download/AutoDL?BundleId=106309
 		StrCpy $0 "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf"
 		StrCpy $1 "jre-8u151-windows-x64.exe"
-		StrCpy $NoSSL "/NOSSL"
 	${EndIf}
 	${WordReplaceS} $(Downloading) "%s" "Oracle Java 8" "+1" $2
-	inetc::get /WEAKSECURITY $NoSSL /RESUME "" /CONNECTTIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
+	inetc::get "$NoSSL"/WEAKSECURITY /RESUME "" /CONNECTTIMEOUT 30 /MODERNPOPUP "$1" /CAPTION "$2" /QUESTION $(ConfirmCancel) /TRANSLATE $(DownloadingFile) $(Downloaded) $(TimeRemaining) $(Speed) $(CancelButton) /USERAGENT "Mozilla/5.0 (Windows NT 6.3; rv:48.0) Gecko/20100101 Firefox/48.0" /HEADER "Cookie: oraclelicense=accept-securebackup-cookie" /NOCOOKIES "$0" "$PLUGINSDIR\$1" /END
 	Pop $0
 	StrCmpS $0 "OK" JavaDownloadOK
 	${WordReplaceS} $(DownloadError) "%s" $0 "+1" $0
@@ -516,6 +514,7 @@ Function .onInit
 
 	${If} ${IsWinXP}
 		SectionSetFlags ${sec13} ${SF_SELECTED}
+		StrCpy $NoSSL "/NOSSL "
 	${EndIf}
 
 	!insertmacro MUI_LANGDLL_DISPLAY
