@@ -5,7 +5,6 @@ ShowUninstDetails show
 !pragma warning disable 6010
 
 !include "MUI2.nsh"
-!include "CPUFeatures.nsh"
 !include "FileFunc.nsh"
 !include "LogicLib.nsh"
 !include "SearchJava.nsh"
@@ -226,11 +225,7 @@ SectionEnd
 Section "-32-bit" sec11
 	SetOverwrite on
 	SetOutPath "$INSTDIR\win32"
-	${If} ${CPUSupports} "SSE2"
-		Nsis7z::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
-	${Else}
-		Nsis7zSSE::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
-	${EndIf}
+	CallAnsiPlugin::Call "${PROJECT_BASEDIR}\src\main\external-resources\third-party\nsis\Plugins\x86-ansi\Nsis7z" Extract 1 "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
 	Pop $0
 	Delete "$INSTDIR\win32\ffmpeg.7z"
 	LockedList::AddModule "$INSTDIR\win32\MediaInfo.dll"
