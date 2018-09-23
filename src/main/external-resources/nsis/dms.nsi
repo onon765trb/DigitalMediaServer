@@ -7,6 +7,7 @@ RequestExecutionLevel user
 SilentInstall silent
 AutoCloseWindow true
 ShowInstDetails nevershow
+CRCCheck force
 
 !include "FileFunc.nsh"
 !include "LogicLib.nsh"
