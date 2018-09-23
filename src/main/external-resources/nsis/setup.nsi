@@ -5,6 +5,7 @@ ShowUninstDetails show
 !pragma warning disable 6010
 
 !include "MUI2.nsh"
+!include "CPUFeatures.nsh"
 !include "FileFunc.nsh"
 !include "LogicLib.nsh"
 !include "SearchJava.nsh"
@@ -225,10 +226,10 @@ SectionEnd
 Section "-32-bit" sec11
 	SetOverwrite on
 	SetOutPath "$INSTDIR\win32"
-	${If} ${IsWinXP}
-		Nsis7zXP::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
-	${Else}
+	${If} ${CPUSupports} "SSE2"
 		Nsis7z::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
+	${Else}
+		Nsis7zSSE::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
 	${EndIf}
 	Pop $0
 	Delete "$INSTDIR\win32\ffmpeg.7z"
@@ -450,7 +451,7 @@ Function .onSelChange
 FunctionEnd
 
 Function RunDMS ; http://mdb-blog.blogspot.ru/2013/01/nsis-lunch-program-as-user-from-uac.html
-	; Run program through explorer.exe to de-evaluate user from admin level to regular one.
+	; Run program through explorer.exe to de-evaluate user from admin level to regular one. It is only need for XP.
 	Exec '"$WINDIR\explorer.exe" "$INSTDIR\${PROJECT_NAME_SHORT}.exe"'
 FunctionEnd
 
