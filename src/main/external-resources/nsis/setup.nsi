@@ -142,7 +142,6 @@ SectionEnd
 
 Section "!$(SectionServer)" sec1
 	SetDetailsPrint both
-	SectionIn RO
 
 	SetOutPath "$INSTDIR"
 	SetOverwrite on
@@ -708,6 +707,7 @@ Section /o "-un.RemoveDataAndSettings" sec100
 SectionEnd
 
 Section "un.${PROJECT_NAME}" sec101
+	SectionIn RO
 	SetShellVarContext all
 	ReadEnvStr $R0 "ALLUSERSPROFILE"
 	SectionGetFlags ${sec100} $R1
