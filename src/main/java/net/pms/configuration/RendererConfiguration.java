@@ -1822,7 +1822,7 @@ public class RendererConfiguration extends UPNPHelper.Renderer {
 	/**
 	 * Returns the maximum bitrate (in megabits-per-second) supported by the
 	 * media renderer as defined in the renderer configuration. The default
-	 * value is "0" (unlimited).
+	 * value is "0" (1000).
 	 *
 	 * @return The bitrate.
 	 */
@@ -1830,13 +1830,21 @@ public class RendererConfiguration extends UPNPHelper.Renderer {
 	public String getMaxVideoBitrate() {
 		if (PMS.getConfiguration().isAutomaticMaximumBitrate()) {
 			try {
-				return calculatedSpeed();
+					if (PMS.getConfiguration().getMaximumBitrateDisplay() >= calculatedSpeed()) {
+						return calculatedSpeed();
+					}
 			} catch (InterruptedException e) {
+				if (PMS.getConfiguration().getMaximumBitrateDisplay() != "90") {
+					return PMS.getConfiguration().getMaximumBitrateDisplay();
+				}
 				return "0";
 			} catch (ExecutionException e) {
 				LOGGER.debug("Automatic maximum bitrate calculation failed with: {}", e.getCause().getMessage());
 				LOGGER.trace("", e.getCause());
 			}
+		}
+		if (PMS.getConfiguration().getMaximumBitrateDisplay() != "90") {
+			return getString(MAX_VIDEO_BITRATE, PMS.getConfiguration().getMaximumBitrateDisplay());
 		}
 		return getString(MAX_VIDEO_BITRATE, "0");
 	}
