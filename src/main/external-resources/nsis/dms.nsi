@@ -41,7 +41,7 @@ Section
 	${GetParameters} $1
 
 	SetOutPath $EXEDIR
-	Exec '"$JavaLocation" -classpath update.jar;${PROJECT_ARTIFACT_ID}.jar $R3 -Xss256k -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8 net.pms.PMS $1'
+	Exec '"$JavaLocation" -classpath update.jar;${PROJECT_ARTIFACT_ID}.jar $R3 -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8 net.pms.PMS $1'
 SectionEnd
 
 Function .onInit

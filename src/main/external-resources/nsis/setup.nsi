@@ -27,7 +27,7 @@ ShowUninstDetails show
 !define /utcdate BUILD_YEAR "%Y"
 
 Name "${PROJECT_NAME}"
-BrandingText "$CopyLeft"
+BrandingText "$CL"
 
 XPStyle on
 InstProgressFlags Smooth colored
@@ -113,7 +113,7 @@ InstallDirRegKey HKCU "${REG_KEY_SOFTWARE}" ""
 
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
-Var CopyLeft
+Var CL
 Var FirewallStatus
 Var RAM
 
@@ -146,9 +146,6 @@ Section "!$(SectionServer)" sec1
 	SetOutPath "$INSTDIR"
 	SetOverwrite on
 
-	CreateDirectory "$INSTDIR\plugins"
-	AccessControl::GrantOnFile "$INSTDIR\plugins" "(BU)" "GenericRead + GenericExecute + GenericWrite + Delete + FullAccess"
-	Pop $0
 	File /nonfatal "${PROJECT_BASEDIR}\src\main\external-resources\plugins\README.*"
 	File /r "${PROJECT_BASEDIR}\src\main\external-resources\documentation"
 	File /r "${PROJECT_BASEDIR}\src\main\external-resources\renderers"
@@ -224,7 +221,7 @@ SectionEnd
 Section "-32-bit" sec11
 	SetOverwrite on
 	SetOutPath "$INSTDIR\win32"
-	CallAnsiPlugin::Call "${PROJECT_BASEDIR}\src\main\external-resources\third-party\nsis\Plugins\x86-ansi\Nsis7z" Extract 1 "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
+	Nsis7z::Extract "${PROJECT_BASEDIR}\target\bin\win32\ffmpeg.7z"
 	Pop $0
 	Delete "$INSTDIR\win32\ffmpeg.7z"
 	LockedList::AddModule "$INSTDIR\win32\MediaInfo.dll"
@@ -470,10 +467,10 @@ Function .onInit
 
 	InitPluginsDir
 
-	StrCpy $CopyLeft "(${U+2184}) ${BUILD_YEAR} ${PRODUCT_NAME} ${PRODUCT_VERSION}                                               Nullsoft Install System ${NSIS_VERSION}"
+	StrCpy $CL "(${U+2184}) ${BUILD_YEAR} ${PRODUCT_NAME} ${PRODUCT_VERSION}                                               Nullsoft Install System ${NSIS_VERSION}"
 	${If} ${AtLeastWinVista}
 	${AndIf} ${AtMostWin7}
-		StrCpy $CopyLeft "(${U+2184}) ${BUILD_YEAR} ${PRODUCT_NAME} ${PRODUCT_VERSION}"
+		StrCpy $CL "(${U+2184}) ${BUILD_YEAR} ${PRODUCT_NAME} ${PRODUCT_VERSION}"
 	${EndIf}
 
 	BringToFront ; http://nsis.sourceforge.net/Allow_only_one_installer_instance
